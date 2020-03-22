@@ -6,11 +6,10 @@ from gi.repository import GLib
 import os
 from pathlib import Path
 
-sound_path = Path("/usr/share/sounds/gnome/default/alerts/")
+sound = Path("/usr/share/sounds/gnome/default/alerts/bark.ogg")
 green_led_path = Path("/sys/devices/platform/leds/leds/pinephone:green:user/brightness")
 blue_led_path = Path("/sys/devices/platform/leds/leds/pinephone:blue:user/brightness")
-my_sound = sound_path/"bark.ogg"
-bark = "cvlc --play-and-exit " + str(my_sound)
+bark = "ogg123 " + str(sound) + " 2>/dev/null"
 green_led_on =  "echo '1' | sudo tee  " + str(green_led_path) + " > /dev/null"
 green_led_off =  "echo '0' | sudo tee  " + str(green_led_path) + " > /dev/null"
 blue_led_on = "echo '1' | sudo tee  " + str(blue_led_path) + " > /dev/null"
@@ -31,14 +30,14 @@ def read_it(gtkconv):
         os.system(green_led_off)
     ignore_read = False
 
-def called(x, y, z):
-    if (x=="org.gnome.Mutter.DisplayConfig" and int(y[dbus.String("PowerSaveMode")])==0):
+#def called(x, y, z):
+#    if (x=="org.gnome.Mutter.DisplayConfig" and int(y[dbus.String("PowerSaveMode")])==0):
         #os.system(blue_led_on)
 
-def launched(a, b, c, d, e):
-    encoding = 'utf-8'
-    launchedapp = str(bytes(a), encoding).split("/")[-1][0:-1]
-    if (launchedapp == "sm.puri.Calls.desktop"):
+#def launched(a, b, c, d, e):
+#    encoding = 'utf-8'
+#    launchedapp = str(bytes(a), encoding).split("/")[-1][0:-1]
+#    if (launchedapp == "sm.puri.Calls.desktop"):
         #os.system(blue_led_off)
 
 
@@ -55,14 +54,14 @@ bus.add_signal_receiver(delay_led_off,
 
 bus.add_signal_receiver(read_it,
                         dbus_interface="im.pidgin.purple.PurpleInterface",
-                        signal_name="ConversationDisplayed")                        
+                        signal_name="ConversationDisplayed")
 
-bus.add_signal_receiver(called,
-                        dbus_interface="org.freedesktop.DBus.Properties",
-                        signal_name="PropertiesChanged")
+#bus.add_signal_receiver(called,
+#                        dbus_interface="org.freedesktop.DBus.Properties",
+#                        signal_name="PropertiesChanged")
 
-bus.add_signal_receiver(launched,
-                        dbus_interface="org.gtk.gio.DesktopAppInfo",
-                        signal_name="Launched")
+#bus.add_signal_receiver(launched,
+#                        dbus_interface="org.gtk.gio.DesktopAppInfo",
+#                        signal_name="Launched")
 
 GLib.MainLoop().run()

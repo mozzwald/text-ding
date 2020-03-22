@@ -1,13 +1,14 @@
 # text-ding
 PureOS SMS Alerts for PinePhones (led + sound)
 
-This project is still very new, would love to have people test it. 
+Original source from https://github.com/pine-clover/text-ding/
 
 steps to run:
-1. ```sudo apt-get install vlc python3-pip python3-dbus```
+1. ```sudo apt-get install vorbis-tools python3-pip python3-dbus```
 2. ```mkdir ~/Projects & cd ~/Projects```
-3. ```git clone git@github.com:pine-clover/text-ding.git```
+3. ```git clone git@github.com:mozzwald/text-ding.git```
 4. ```cd text-ding/ & chmod +x main.py```
-5. you can run it manually with ```python3 main.py``` or set up autostart below
-6. ```cp text-ding.desktop ~/.config/autostart```
-7. autostart requires reboot
+5. ```sudo cp main.py /usr/local/bin/test-ding```
+6. ```mkdir -p ~/.config/autostart```
+7. ```cp text-ding.desktop ~/.config/autostart```
+8. Reboot
