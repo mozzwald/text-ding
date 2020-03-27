@@ -7,11 +7,11 @@ import os
 from pathlib import Path
 
 sound = Path("/usr/share/sounds/gnome/default/alerts/bark.ogg")
-green_led_path = Path("/sys/devices/platform/leds/leds/pinephone:green:user/brightness")
+green_led_path = Path("/sys/devices/platform/leds/leds/pinephone:green:user/trigger")
 blue_led_path = Path("/sys/devices/platform/leds/leds/pinephone:blue:user/brightness")
 bark = "ogg123 " + str(sound) + " 2>/dev/null"
-green_led_on =  "echo '1' | sudo tee  " + str(green_led_path) + " > /dev/null"
-green_led_off =  "echo '0' | sudo tee  " + str(green_led_path) + " > /dev/null"
+green_led_on =  "echo 'heartbeat' | sudo tee  " + str(green_led_path) + " > /dev/null"
+green_led_off =  "echo 'none' | sudo tee  " + str(green_led_path) + " > /dev/null"
 blue_led_on = "echo '1' | sudo tee  " + str(blue_led_path) + " > /dev/null"
 blue_led_off = "echo '0' | sudo tee  " + str(blue_led_path) + " > /dev/null"
 ignore_read = False
